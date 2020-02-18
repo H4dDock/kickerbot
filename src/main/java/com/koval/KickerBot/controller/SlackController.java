@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SlackController {
-    @PostMapping(value = "/slack/slash",
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/slack/slash")
     public SlackResponse onReceiveSlashCommand(@ModelAttribute ReceiveSlashDto receiveSlashDto){
         return new SlackResponse("test text");
     }
