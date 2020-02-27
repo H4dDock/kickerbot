@@ -1,16 +1,14 @@
 package com.koval.KickerBot.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "duties")
 @Entity
 public class Duty {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String dutyName;
     @Column
     private String dutyDescription;

@@ -1,27 +1,21 @@
 package com.koval.KickerBot.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "players-duties")
+@Table(name = "players_duties")
 @Entity
 public class PlayersDuties {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "debtor_id", referencedColumnName = "id", nullable = false)
     private Player debtor;
-    @Column(nullable = false)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "borrower_id", referencedColumnName = "id", nullable = false)
     private Player borrower;
-    @Column(nullable = false)
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "duty_id", referencedColumnName = "id", nullable = false)
     private Duty duty;
     @Column(nullable = false)
     private Long count;

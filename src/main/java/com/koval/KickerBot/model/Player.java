@@ -1,23 +1,15 @@
 package com.koval.KickerBot.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "players")
 @Entity
 public class Player {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private String surname;
-    @OneToMany(fetch = FetchType.LAZY)
-
+    @Column(unique = true, nullable = false)
+    private String nickname;
 
     public Long getId() {
         return id;
@@ -27,19 +19,11 @@ public class Player {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
