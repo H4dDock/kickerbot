@@ -2,11 +2,11 @@ package com.koval.KickerBot.model;
 
 import javax.persistence.*;
 
-@Table(name = "players_duties")
+@Table(name = "players_bets")
 @Entity
-public class PlayersDuties {
+public class PlayersBets {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "debtor_id", referencedColumnName = "id", nullable = false)
@@ -16,7 +16,7 @@ public class PlayersDuties {
     private Player borrower;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "duty_id", referencedColumnName = "id", nullable = false)
-    private Duty duty;
+    private Bet bet;
     @Column(nullable = false)
     private Long count;
 
@@ -44,12 +44,12 @@ public class PlayersDuties {
         this.borrower = borrower;
     }
 
-    public Duty getDuty() {
-        return duty;
+    public Bet getBet() {
+        return bet;
     }
 
-    public void setDuty(Duty duty) {
-        this.duty = duty;
+    public void setBet(Bet bet) {
+        this.bet = bet;
     }
 
     public Long getCount() {

@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SlackResponse {
+public class SlackResponseDto {
     @JsonProperty("text")
     private String text;
 
     @JsonProperty("response_type")
     private String responseType;
 
-    public SlackResponse() {
+    public SlackResponseDto() {
     }
 
-    public SlackResponse(String text) {
+    public SlackResponseDto(String text) {
         this.text = text;
     }
 

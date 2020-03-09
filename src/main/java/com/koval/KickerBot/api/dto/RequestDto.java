@@ -1,6 +1,6 @@
 package com.koval.KickerBot.api.dto;
 
-public class ReceiveSlashDto {
+public class RequestDto {
     private String teamId;
     private String teamDomain;
     private String channelName;
