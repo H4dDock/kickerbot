@@ -3,7 +3,7 @@ package com.koval.KickerBot.controller;
 import com.koval.KickerBot.api.dto.RequestDto;
 import com.koval.KickerBot.api.dto.SlackResponseDto;
 import com.koval.KickerBot.model.Player;
-import com.koval.KickerBot.repository.PlayersDutiesRepository;
+import com.koval.KickerBot.repository.PlayersBetRepository;
 import com.koval.KickerBot.service.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,11 +19,11 @@ public class PlayersController {
     private final PlayerService playerService;
 
 
-    private final PlayersDutiesRepository playersDutiesRepository;
+    private final PlayersBetRepository playersBetRepository;
 
-    public PlayersController(PlayerService playerService, PlayersDutiesRepository playersDutiesRepository) {
+    public PlayersController(PlayerService playerService, PlayersBetRepository playersBetRepository) {
         this.playerService = playerService;
-        this.playersDutiesRepository = playersDutiesRepository;
+        this.playersBetRepository = playersBetRepository;
     }
 
     @PostMapping(value = "/players/create-player")

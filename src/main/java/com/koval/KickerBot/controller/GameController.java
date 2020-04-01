@@ -6,6 +6,7 @@ import com.koval.KickerBot.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,5 +22,10 @@ public class GameController {
     @PostMapping(value = "/games/game")
     public SlackResponseDto gameResult(@ModelAttribute RequestDto requestDto){
         return gameService.gameResult(requestDto);
+    }
+
+    @PutMapping(value = "/games/game")
+    public SlackResponseDto betPayed(@ModelAttribute RequestDto requestDto){
+        return gameService.betPayed(requestDto);
     }
 }

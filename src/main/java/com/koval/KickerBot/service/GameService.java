@@ -2,10 +2,10 @@ package com.koval.KickerBot.service;
 
 import com.koval.KickerBot.api.dto.RequestDto;
 import com.koval.KickerBot.api.dto.SlackResponseDto;
-import com.koval.KickerBot.model.PlayersBets;
+import com.koval.KickerBot.model.PlayersBet;
 import com.koval.KickerBot.repository.BetRepository;
 import com.koval.KickerBot.repository.PlayerRepository;
-import com.koval.KickerBot.repository.PlayersDutiesRepository;
+import com.koval.KickerBot.repository.PlayersBetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,26 +13,49 @@ import org.springframework.stereotype.Service;
 public class GameService {
     private final PlayerRepository playerRepository;
     private final BetRepository betRepository;
-    private final PlayersDutiesRepository playersDutiesRepository;
+    private final PlayersBetRepository playersBetRepository;
 
     @Autowired
-    public GameService(PlayerRepository playerRepository, BetRepository betRepository, PlayersDutiesRepository playersDutiesRepository) {
+    public GameService(PlayerRepository playerRepository, BetRepository betRepository, PlayersBetRepository playersBetRepository) {
         this.playerRepository = playerRepository;
         this.betRepository = betRepository;
-        this.playersDutiesRepository = playersDutiesRepository;
+        this.playersBetRepository = playersBetRepository;
     }
 
+    //ToDo заменить массив дата на мапу вынести в метод перенос
     public SlackResponseDto gameResult(RequestDto requestDto){
-        String[] data = requestDto.getText().replace("@", "").split(" ");
+        String[] data = requestDto.getText()
+                .replaceAll("@", "")
+                .replaceAll("-", " ")
+                .split(" ");
 
-        PlayersBets playersBets = new PlayersBets();
-        playersBets.setBorrower(playerRepository.findByNickname(data[0].split("-")[0]));
-        playersBets.setDebtor(playerRepository.findByNickname(data[0].split("-")[1]));
-        playersBets.setBet(betRepository.findByBetName(data[1]));
-        playersBets.setCount(Long.parseLong(data[2]));
+        PlayersBet playersBet = playersBetRepository.findGameByPlayersAndBet(data[1], data[0], data[2]);
+        if(playersBet != null){
+            playersBet.setCount(playersBet.getCount() + Long.parseLong(data[3]));
+        } else{
+            playersBet = new PlayersBet();
+            playersBet.setBorrower(playerRepository.findByNickname(data[0]));
+            playersBet.setDebtor(playerRepository.findByNickname(data[1]));
+            playersBet.setBet(betRepository.findByBetName(data[2]));
+            playersBet.setCount(Long.parseLong(data[3]));
+        }
 
-        playersDutiesRepository.save(playersBets);
+        playersBetRepository.save(playersBet);
 
         return new SlackResponseDto("Game result saved!");
+    }
+
+    public SlackResponseDto betPayed(RequestDto requestDto){
+        String[] data = requestDto.getText()
+                .replaceAll("@", "")
+                .replaceAll("->"," ")
+                .split(" ");
+
+        playersBetRepository.findGameByPlayersAndBet(data[0], data[1], data[2]);
+        return new SlackResponseDto("Debt set off");
+    }
+
+    public boolean isThereIsPayerBet(Long betId){
+        return playersBetRepository.findByBetId(betId).size() > 0;
     }
 }

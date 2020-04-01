@@ -1,23 +1,13 @@
-package com.koval.KickerBot.model;
+package com.koval.KickerBot.api.dto;
 
-import javax.persistence.*;
+import com.koval.KickerBot.model.Bet;
+import com.koval.KickerBot.model.Player;
 
-@Table(name = "players_bets")
-@Entity
-public class PlayersBets {
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+public class PlayerBetsDto {
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "debtor_id", referencedColumnName = "id", nullable = false)
     private Player debtor;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "borrower_id", referencedColumnName = "id", nullable = false)
     private Player borrower;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "duty_id", referencedColumnName = "id", nullable = false)
     private Bet bet;
-    @Column(nullable = false)
     private Long count;
 
     public Long getId() {

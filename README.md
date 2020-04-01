@@ -6,4 +6,5 @@ Keeps custom bets.
 2) Create custom bet ```/b betname ["betDescription"] ```
 3) Save game result ```/g @winner-@loser bettype count```
 ## Actual readme date
-** _27.02.2020_ **
+**_27.02.2020_**
+## Last update
